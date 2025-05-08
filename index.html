@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rishita Gupta's Birthday Surprise</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .btn {
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      border: none;
+      padding: 18px 35px;
+      font-size: 24px;
+      color: white;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+    }
+
+    .bubble-container, .bday-signs, .wishes {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .bubble {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: white;
+      overflow: hidden;
+      margin: 10px;
+      animation: floatUp 6s infinite ease-in-out;
+      display: inline-block;
+    }
+
+    .bubble img {
+      width: 90%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(-40px); opacity: 0.8; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .bday-sign {
+      font-size: 48px;
+      color: #fff700;
+      animation: bounce 2s infinite;
+      margin: 8px;
+      display: inline-block;
+      text-shadow: 2px 2px 10px #ff6f91;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .wishes {
+      font-size: 26px;
+      color: #ffffff;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+      max-width: 750px;
+      margin: 0 auto;
+      padding-top: 20px;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+  <div class="container">
+    <button class="btn" onclick="revealSurprise()">Surprise 🎁</button>
+
+    <div class="bubble-container" id="bubbles">
+      <div class="bubble"><img src="photo1.jpg" alt="Photo 1"></div>
+      <div class="bubble"><img src="photo2.jpg" alt="Photo 2"></div>
+      <div class="bubble"><img src="photo3.jpg" alt="Photo 3"></div>
+    </div>
+
+    <div class="bday-signs" id="signs">
+      <div class="bday-sign">H</div>
+      <div class="bday-sign">A</div>
+      <div class="bday-sign">P</div>
+      <div class="bday-sign">P</div>
+      <div class="bday-sign">Y</div>
+      <div class="bday-sign"> </div>
+      <div class="bday-sign">B</div>
+      <div class="bday-sign">I</div>
+      <div class="bday-sign">R</div>
+      <div class="bday-sign">T</div>
+      <div class="bday-sign">H</div>
+      <div class="bday-sign">D</div>
+      <div class="bday-sign">A</div>
+      <div class="bday-sign">Y</div>
+      <div class="bday-sign">!</div>
+      <div class="bday-sign"> </div>
+      <div class="bday-sign">R</div>
+      <div class="bday-sign">I</I></div>
+      <div class="bday-sign">S</S></div>
+      <div class="bday-sign">H</div>
+      <div class="bday-sign">I</div>
+      <div class="bday-sign">T</div>
+      <div class="bday-sign">A</div>
+    </div>
+
+    <div class="wishes" id="wishes">
+      <p>To the brightest star of the day — Rishita</p>
+      <p>May your journey be filled with sparkles, smiles, and infinite joy. Happy Birthday!</p>
+    </div>
+  </div>
+
+  <script>
+    function revealSurprise() {
+      document.getElementById('bubbles').style.display = 'flex';
+      document.getElementById('signs').style.display = 'block';
+      document.getElementById('wishes').style.display = 'block';
+      confetti();
+    }
+
+    // Confetti canvas animation
+    function confetti() {
+      const canvas = document.getElementById('confetti');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const pieces = [];
+      for (let i = 0; i < 150; i++) {
+        pieces.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 6 + 2,
+          color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+          velocity: Math.random() * 2 + 0.5
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let piece of pieces) {
+          ctx.beginPath();
+          ctx.arc(piece.x, piece.y, piece.radius, 0, 2 * Math.PI);
+          ctx.fillStyle = piece.color;
+          ctx.fill();
+          piece.y += piece.velocity;
+          if (piece.y > canvas.height) {
+            piece.y = 0;
+            piece.x = Math.random() * canvas.width;
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+  </script>
+</body>
+</html>
